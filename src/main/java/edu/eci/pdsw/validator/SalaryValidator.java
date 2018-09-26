@@ -17,24 +17,31 @@ public class SalaryValidator implements EmployeeValidator {
 	 */
 	@Override
 	public Optional<ErrorType> validate(Employee employee){
-		Optional<ErrorType> error = Optional.empty();
-		if(!(employee.getPersonId() >= 1000 && employee.getPersonId() <= 100000)){
+		int pId = employee.getPersonId();
+		long salary = employee.getSalary();
+		SocialSecurityType sst = employee.getSocialSecurityType();
+		if(pId >= 1000 && pId <= 100000) {
+			if(salary >= 100 && salary <= 50000) {
+				if(salary < 1500) {
+					if(sst.equals(SocialSecurityType.SISBEN)) {
+						return Optional.empty();
+					}else {
+						return Optional.of(ErrorType.INVALID_SISBEN_AFFILIATION);
+					}
+				}
+				else if(salary < 10000) {
+					if(sst.equals(SocialSecurityType.EPS)) {
+						return Optional.empty();
+					}else {
+						return Optional.of(ErrorType.INVALID_EPS_AFFILIATION);
+					}
+				}
+			}else {
+				return Optional.of(ErrorType.INVALID_SALARY);
+			}
+		}else {
 			return Optional.of(ErrorType.INVALID_PERSONID);
 		}
-		if(employee.getSalary() < 100 || employee.getSalary() > 50000) {
-			return Optional.of(ErrorType.INVALID_SALARY);
-		}
-		if((employee.getSalary() >= 100 && employee.getSalary() < 1500) && employee.getSocialSecurityType() != SocialSecurityType.SISBEN) {
-			return Optional.of(ErrorType.INVALID_SISBEN_AFFILIATION);
-		}
-		if((employee.getSalary() >= 1500 && employee.getSalary() < 10000) && employee.getSocialSecurityType() != SocialSecurityType.EPS) {
-			return Optional.of(ErrorType.INVALID_EPS_AFFILIATION);
-		}
-		if((employee.getSalary() >= 10000 && employee.getSalary() < 50000) && employee.getSocialSecurityType() != SocialSecurityType.PREPAID) {
-			return Optional.of(ErrorType.INVALID_PREPAID_AFFILIATION);
-		}
-		else {
-			return error;
-		}		
+		return Optional.empty();
 	}
 }
