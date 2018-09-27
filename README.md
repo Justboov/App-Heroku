@@ -1,1 +1,2 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ed5566160ce84f28944c322400f87d9d)](https://app.codacy.com/app/Justboov/App-Heroku?utm_source=github.com&utm_medium=referral&utm_content=Justboov/App-Heroku&utm_campaign=Badge_Grade_Dashboard)
 [![CircleCI](https://circleci.com/gh/Justboov/App-Heroku.svg?style=svg)](https://circleci.com/gh/Justboov/App-Heroku)
