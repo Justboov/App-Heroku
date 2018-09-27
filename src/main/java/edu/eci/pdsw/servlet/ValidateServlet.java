@@ -62,11 +62,11 @@ public class ValidateServlet extends HttpServlet {
 		resp.setContentType("text/html");
 		// TODO Create and validate employee
 		Employee empleado = new Employee();
-		try {
-			empleado.setPersonId(Integer.parseInt(req.getParameter("personID")));
-			empleado.setSalary(Long.parseLong(req.getParameter("salary")));
-			empleado.setSocialSecurityType(SocialSecurityType.valueOf(req.getParameter("SocialSecurity")));
-			Optional<ErrorType> response = validator.validate(empleado);
+		
+		empleado.setPersonId(Integer.parseInt(req.getParameter("personID")));
+		empleado.setSalary(Long.parseLong(req.getParameter("salary")));
+		empleado.setSocialSecurityType(SocialSecurityType.valueOf(req.getParameter("SocialSecurity")));
+		Optional<ErrorType> response = validator.validate(empleado);
 		
 		// TODO Add the Content Type, Status, and Response according to validation response	
 		if(response.get().equals(ErrorType.INVALID_PERSONID)) {
@@ -98,11 +98,14 @@ public class ValidateServlet extends HttpServlet {
 			resp.setStatus(200);
 			responseWriter.write(String.format(readFile("result.html"), response.map(ErrorType::name).orElse("Success")));
 			
-		}}catch(Exception ex){
+		}
+		
+		else{
 			responseWriter.write("Parametro valido");
 			System.out.println(ex.getMessage());
 			resp.setStatus(500);;
 		}
+		
 		responseWriter.flush();
 	}
 
