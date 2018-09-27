@@ -70,30 +70,30 @@ public class ValidateServlet extends HttpServlet {
 		
 		// TODO Add the Content Type, Status, and Response according to validation response	
 		if(response.get().equals(ErrorType.INVALID_PERSONID)) {
-			responseWriter.write("El número de identificaión personal no es valido");
+			responseWriter.write("El número de identificaión personal no es válido");
 			resp.setStatus(404);
 			responseWriter.write(String.format(readFile("result.html"), response.map(ErrorType::name).orElse("Success")));
 		}
 		
-		if(response.get().equals(ErrorType.INVALID_SALARY)) {
-			responseWriter.write("El salario no es valido");
+		else if(response.get().equals(ErrorType.INVALID_SALARY)) {
+			responseWriter.write("El salario no es válido");
 			resp.setStatus(404);
 			responseWriter.write(String.format(readFile("result.html"), response.map(ErrorType::name).orElse("Success")));			
 		}
 		
-		if(response.get().equals(ErrorType.INVALID_SISBEN_AFFILIATION)) {
-			responseWriter.write("La afiliacion a SISBEN es incorrecta");
+		else if(response.get().equals(ErrorType.INVALID_SISBEN_AFFILIATION)) {
+			responseWriter.write("La afiliación al SISBEN es inválida");
 			resp.setStatus(404);
 			responseWriter.write(String.format(readFile("result.html"), response.map(ErrorType::name).orElse("Success")));			
 		}
 		
-		if(response.get().equals(ErrorType.INVALID_EPS_AFFILIATION)) {
-			responseWriter.write("La afiliacion a EPS es incorrecta");
+		else if(response.get().equals(ErrorType.INVALID_EPS_AFFILIATION)) {
+			responseWriter.write("La afiliacion a la EPS es inválida");
 			resp.setStatus(404);
 			responseWriter.write(String.format(readFile("result.html"), response.map(ErrorType::name).orElse("Success")));			
 		}
 		
-		if(response.get().equals(Optional.empty())) {
+		else if(response.get().equals(Optional.empty())) {
 			responseWriter.write("La validación fue exitosa");
 			resp.setStatus(200);
 			responseWriter.write(String.format(readFile("result.html"), response.map(ErrorType::name).orElse("Success")));
