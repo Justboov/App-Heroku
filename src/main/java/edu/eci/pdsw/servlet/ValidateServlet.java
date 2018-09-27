@@ -60,42 +60,44 @@ public class ValidateServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Writer responseWriter = resp.getWriter();
 		resp.setContentType("text/html");
+		
 		// TODO Create and validate employee
 		Employee empleado = new Employee();
 		
 		empleado.setPersonId(Integer.parseInt(req.getParameter("personID")));
 		empleado.setSalary(Long.parseLong(req.getParameter("salary")));
 		empleado.setSocialSecurityType(SocialSecurityType.valueOf(req.getParameter("SocialSecurity")));
+		
 		Optional<ErrorType> response = validator.validate(empleado);
 		
 		// TODO Add the Content Type, Status, and Response according to validation response	
 		if(response.get().equals(ErrorType.INVALID_PERSONID)) {
-			responseWriter.write("El número de identificaión personal no es válido");
 			resp.setStatus(404);
+			responseWriter.write("El número de identificaión personal no es válido");
 			responseWriter.write(String.format(readFile("result.html"), response.map(ErrorType::name).orElse("Success")));
 		}
 		
 		else if(response.get().equals(ErrorType.INVALID_SALARY)) {
-			responseWriter.write("El salario no es válido");
 			resp.setStatus(404);
+			responseWriter.write("El salario no es válido");
 			responseWriter.write(String.format(readFile("result.html"), response.map(ErrorType::name).orElse("Success")));			
 		}
 		
 		else if(response.get().equals(ErrorType.INVALID_SISBEN_AFFILIATION)) {
-			responseWriter.write("La afiliación al SISBEN es inválida");
 			resp.setStatus(404);
+			responseWriter.write("La afiliación al SISBEN es inválida");
 			responseWriter.write(String.format(readFile("result.html"), response.map(ErrorType::name).orElse("Success")));			
 		}
 		
 		else if(response.get().equals(ErrorType.INVALID_EPS_AFFILIATION)) {
-			responseWriter.write("La afiliacion a la EPS es inválida");
 			resp.setStatus(404);
+			responseWriter.write("La afiliacion a la EPS es inválida");
 			responseWriter.write(String.format(readFile("result.html"), response.map(ErrorType::name).orElse("Success")));			
 		}
 		
 		else if(response.get().equals(Optional.empty())) {
-			responseWriter.write("La validación fue exitosa");
 			resp.setStatus(200);
+			responseWriter.write("La validación fue exitosa");
 			responseWriter.write(String.format(readFile("result.html"), response.map(ErrorType::name).orElse("Success")));
 			
 		}
